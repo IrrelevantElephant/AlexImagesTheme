@@ -15,21 +15,31 @@
 					<h2 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr__( 'Permalink to %s', 'twentyeleven' ), the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
 					<h3 class="entry-format"><?php _e( 'Featured', 'twentyeleven' ); ?></h3>
 				</hgroup>
-			<?php else : ?>
-			<h1 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr__( 'Permalink to %s', 'twentyeleven' ), the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a></h1>
-			<?php endif; ?>
+			<?php else : 
+				// HD 20/08/2011 - Assign the title of the post to $pageTitle via the output buffer then use it to check whether to print content details
+				ob_start();
+				the_title();
+				$pageTitle = ob_get_contents();
+				ob_end_clean();
+				if ($pageTitle != 'Welcome') :?>
+					<h1 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr__( 'Permalink to %s', 'twentyeleven' ), the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a></h1>
+				<?php endif;
+			endif; ?>
+			
+			<?php if ($pageTitle != 'Welcome') :?>
+				<?php if ( 'post' == get_post_type() ) : ?>
+				<div class="entry-meta">
+					<?php twentyeleven_posted_on(); ?>
+				</div><!-- .entry-meta -->
+				<?php endif; ?>
 
-			<?php if ( 'post' == get_post_type() ) : ?>
-			<div class="entry-meta">
-				<?php twentyeleven_posted_on(); ?>
-			</div><!-- .entry-meta -->
-			<?php endif; ?>
-
-			<?php if ( comments_open() && ! post_password_required() ) : ?>
-			<div class="comments-link">
-				<?php comments_popup_link( '<span class="leave-reply">' . __( 'Reply', 'twentyeleven' ) . '</span>', _x( '1', 'comments number', 'twentyeleven' ), _x( '%', 'comments number', 'twentyeleven' ) ); ?>
-			</div>
-			<?php endif; ?>
+				<?php if ( comments_open() && ! post_password_required() ) : ?>
+				<div class="comments-link">
+					<?php comments_popup_link( '<span class="leave-reply">' . __( 'Reply', 'twentyeleven' ) . '</span>', _x( '1', 'comments number', 'twentyeleven' ), _x( '%', 'comments number', 'twentyeleven' ) ); ?>
+				</div>
+				<?php endif; 
+			endif; ?>
+				
 		</header><!-- .entry-header -->
 
 		<?php if ( is_search() ) : // Only display Excerpts for Search ?>
