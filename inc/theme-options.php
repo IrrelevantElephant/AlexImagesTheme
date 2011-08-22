@@ -206,8 +206,7 @@ function twentyeleven_get_theme_options() {
  *
  * @since Twenty Eleven 1.2
  */
-function twentyeleven_theme_options_render_page() {
-	?>
+function twentyeleven_theme_options_render_page() {?>
 	<div class="wrap">
 		<?php screen_icon(); ?>
 		<h2><?php printf( __( '%s Theme Options', 'twentyeleven' ), get_current_theme() ); ?></h2>
@@ -219,7 +218,6 @@ function twentyeleven_theme_options_render_page() {
 				$options = twentyeleven_get_theme_options();
 				$default_options = twentyeleven_get_default_theme_options();
 			?>
-
 			<table class="form-table">
 
 				<tr valign="top" class="image-radio-option color-scheme"><th scope="row"><?php _e( 'Color Scheme', 'twentyeleven' ); ?></th>
@@ -280,7 +278,6 @@ function twentyeleven_theme_options_render_page() {
 					</td>
 				</tr>
 			</table>
-
 			<?php submit_button(); ?>
 		</form>
 	</div>
@@ -406,3 +403,4 @@ function twentyeleven_layout_classes( $existing_classes ) {
 	return array_merge( $existing_classes, $classes );
 }
 add_filter( 'body_class', 'twentyeleven_layout_classes' );
+?>
